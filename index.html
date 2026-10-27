@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lager-Rundgang</title>
+<meta name="description" content="Lernspiel zur Arbeitsschutz-Unterweisung im Lager: sechs Stationen, ein Avatar, der jede Antwort erklärt.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Crect width=%2240%22 height=%2240%22 rx=%224%22 fill=%22%231F7A45%22/%3E%3Cpath d=%22M13 30V12h6v13h9v5z%22 fill=%22%23fff%22/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="bar">
+  <div class="brand">
+    <svg class="brand-sign" viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="4" fill="var(--green)"/><path d="M13 30 L13 12 L19 12 L19 25 L28 25 L28 30 Z" fill="#fff"/></svg>
+    <span>Lager-Rundgang</span>
+  </div>
+  <div class="bar-tools">
+    <span class="score" id="score" aria-live="polite">0 von 6 Stationen</span>
+    <button class="tool" id="voiceBtn" aria-pressed="true" title="Stimme der Lagerleiterin an- oder ausschalten">Stimme an</button>
+  </div>
+</header>
+<p class="portfolio-banner">This app was developed by Amrina as part of a portfolio. <a href="https://sayamrina.github.io/" target="_blank" rel="noopener">View the portfolio</a></p>
+
+<main class="stage">
+  <section class="floor" aria-label="Lagerplan mit sechs Stationen">
+    <svg id="plan" viewBox="0 0 400 300" role="img" aria-labelledby="planTitle">
+      <title id="planTitle">Lagerhalle von oben mit gelber Bodenmarkierung und sechs Stationen</title>
+      <defs>
+        <pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <rect width="5" height="10" fill="var(--yellow)"/><rect x="5" width="5" height="10" fill="var(--ink)"/>
+        </pattern>
+      </defs>
+      <rect x="6" y="6" width="388" height="288" rx="3" class="hall"/>
+      <!-- Regale -->
+      <g class="racks">
+        <rect x="30" y="30" width="120" height="22"/><rect x="30" y="64" width="120" height="22"/>
+        <rect x="250" y="30" width="120" height="22"/><rect x="250" y="64" width="120" height="22"/>
+        <rect x="30" y="214" width="90" height="22"/><rect x="30" y="248" width="90" height="22"/>
+      </g>
+      <rect x="290" y="210" width="80" height="60" class="zone-haz"/>
+      <text x="330" y="244" class="zone-label" text-anchor="middle">Gefahrstoffe</text>
+      <rect x="168" y="270" width="64" height="18" fill="url(#hatch)" opacity=".85"/>
+      <text x="240" y="284" class="zone-label">Tor</text>
+      <!-- Bodenmarkierung -->
+      <path id="route" class="tape" d="M200 279 L200 240 L150 240 L150 150 L70 150 L70 112 L200 112 L330 112 L330 150 L250 150 L250 190 L330 190"/>
+      <g id="stations"></g>
+      <g id="walker" transform="translate(200 279)">
+        <circle r="9" class="walker-ring"/>
+        <circle r="5" class="walker-dot"/>
+      </g>
+    </svg>
+    <ol class="legend" id="legend"></ol>
+  </section>
+
+  <section class="desk" aria-live="polite">
+    <div class="mission" id="mission"></div>
+
+    <div class="guide">
+      <svg class="avatar" id="avatar" viewBox="0 0 120 140" aria-hidden="true">
+        <path d="M22 140 C22 104 38 92 60 92 C82 92 98 104 98 140 Z" fill="#F2A900"/>
+        <path d="M44 96 L52 140 M76 96 L68 140" stroke="#E9EEF0" stroke-width="5"/>
+        <path d="M30 120 H90" stroke="#E9EEF0" stroke-width="5"/>
+        <rect x="52" y="78" width="16" height="16" fill="#B07A5A"/>
+        <ellipse cx="60" cy="56" rx="26" ry="29" fill="#C68B66"/>
+        <path d="M33 52 C33 26 87 26 87 52 C82 40 72 36 60 36 C48 36 38 40 33 52 Z" fill="#2B2420"/>
+        <path d="M30 40 C34 18 86 18 90 40 L92 46 H28 Z" fill="var(--yellow)"/>
+        <rect x="26" y="44" width="68" height="6" rx="3" fill="#D9A800"/>
+        <circle cx="50" cy="58" r="3" fill="#1C262C"/><circle cx="70" cy="58" r="3" fill="#1C262C"/>
+        <path d="M45 50 Q50 47 55 50 M65 50 Q70 47 75 50" stroke="#2B2420" stroke-width="2" fill="none"/>
+        <ellipse id="mouth" cx="60" cy="72" rx="7" ry="2" fill="#7A2E2E"/>
+      </svg>
+      <div class="bubble" id="bubble">
+        <p class="who">Jana Wolf, Lagerleiterin</p>
+        <p id="say"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <p>Lernspiel-Prototyp von Amrina. Die Inhalte orientieren sich an ASR A1.8, ASR A2.2, TRBS 2121-2, DGUV Vorschrift 68 und der CLP-Verordnung; sie ersetzen keine betriebliche Unterweisung.</p>
+</footer>
+<script src="game.js"></script>
+</body>
+</html>

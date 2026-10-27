@@ -1,0 +1,156 @@
+:root {
+  --concrete: #D9DDDF;
+  --hall: #E9ECEE;
+  --rack: #9AA5AB;
+  --ink: #1C262C;
+  --muted: #4E5B63;
+  --yellow: #F5C400;
+  --green: #1F7A45;
+  --red: #C8102E;
+  --paper: #FFFFFF;
+  --line: #B8C1C6;
+  --display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --body: 'Atkinson Hyperlegible', Verdana, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --concrete: #1E2529;
+    --hall: #283136;
+    --rack: #56636A;
+    --ink: #E6EBEE;
+    --muted: #A9B5BC;
+    --paper: #2F393F;
+    --line: #46535A;
+    --green: #2E9A5A;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--concrete);
+  color: var(--ink);
+  font: 400 17px/1.5 var(--body);
+}
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+
+.bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 24px;
+  background: #1C262C; color: #E6EBEE;
+}
+.brand { white-space: nowrap; display: flex; align-items: center; gap: 10px; font: 700 26px/1 var(--display); letter-spacing: .01em; }
+.brand-sign { width: 32px; height: 32px; }
+.bar-tools { display: flex; align-items: center; gap: 14px; }
+.score { font: 600 19px/1 var(--display); }
+.tool {
+  background: transparent; border: 2px solid var(--yellow); color: var(--yellow);
+  padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 15px; white-space: nowrap;
+}
+.tool[aria-pressed="false"] { border-color: #9AA5AB; color: #9AA5AB; }
+.mission h2:focus { outline: none; }
+
+.portfolio-banner {
+  margin: 0; padding: 8px 24px;
+  background: var(--yellow); color: #1C262C; font-size: 15px;
+}
+.portfolio-banner a { color: #1C262C; font-weight: 700; }
+
+.stage {
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 28px;
+  max-width: 1240px; margin: 0 auto; padding: 28px 24px 12px;
+  align-items: start;
+}
+
+/* Lagerplan */
+.floor { position: sticky; top: 16px; }
+#plan { width: 100%; height: auto; display: block; }
+.hall { fill: var(--hall); stroke: var(--rack); stroke-width: 2; }
+.racks rect { fill: var(--rack); }
+.zone-haz { fill: none; stroke: var(--red); stroke-width: 2; stroke-dasharray: 6 4; }
+.zone-label { font: 600 12px var(--display); fill: var(--muted); }
+.tape { fill: none; stroke: var(--yellow); stroke-width: 7; stroke-linejoin: round; stroke-linecap: square; }
+.station rect { fill: var(--paper); stroke: var(--ink); stroke-width: 2; }
+.station text { font: 700 15px var(--display); fill: var(--ink); }
+.station.done rect { fill: var(--green); stroke: var(--green); }
+.station.done text { fill: #fff; }
+.station.current rect { stroke: var(--red); stroke-width: 3; }
+.walker-ring { fill: none; stroke: var(--ink); stroke-width: 2.5; }
+.walker-dot { fill: var(--red); }
+
+.legend { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 18px; font-size: 15px; color: var(--muted); }
+.legend li { display: flex; gap: 8px; }
+.legend b { font-family: var(--display); color: var(--ink); min-width: 1.2em; }
+.legend .done { color: var(--ink); }
+.legend .done b { color: var(--green); }
+
+/* Missionsbereich */
+.desk { display: flex; flex-direction: column; gap: 20px; }
+.mission { background: var(--paper); border-left: 8px solid var(--yellow); padding: 22px 24px 24px; border-radius: 0 6px 6px 0; }
+.mission h1, .mission h2 { font: 700 34px/1.05 var(--display); margin: 0 0 10px; }
+.mission .place { margin: 0 0 4px; color: var(--muted); font-size: 15px; }
+.mission p { margin: 0 0 14px; max-width: 62ch; }
+.scene { display: flex; gap: 16px; align-items: center; margin: 4px 0 16px; }
+.scene svg { flex: 0 0 84px; height: 84px; }
+.scene p { margin: 0; }
+
+.options { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.opt {
+  width: 100%; text-align: left; display: flex; gap: 12px; align-items: flex-start;
+  background: transparent; border: 2px solid var(--line); border-radius: 6px;
+  padding: 12px 14px; cursor: pointer; line-height: 1.4;
+}
+.opt:hover { border-color: var(--ink); }
+.opt .key { font: 700 18px/1.2 var(--display); min-width: 1.2em; }
+.opt.wrong { border-color: var(--red); background: color-mix(in srgb, var(--red) 9%, transparent); }
+.opt.right { border-color: var(--green); background: color-mix(in srgb, var(--green) 12%, transparent); }
+.opt:disabled { cursor: default; }
+.opt:disabled:not(.right):not(.wrong) { opacity: .55; }
+
+.next {
+  margin-top: 16px; background: var(--ink); color: var(--concrete); border: 0; border-radius: 6px;
+  padding: 12px 20px; font-weight: 700; cursor: pointer;
+}
+.start-list { margin: 0 0 16px; padding-left: 20px; }
+
+.guide { display: flex; gap: 14px; align-items: flex-end; }
+.avatar { flex: 0 0 104px; width: 104px; height: auto; }
+.bubble {
+  position: relative; flex: 1; background: var(--paper); border: 2px solid var(--ink);
+  border-radius: 10px; padding: 12px 16px; min-height: 96px;
+}
+.bubble::before {
+  content: ""; position: absolute; left: -12px; bottom: 22px; width: 20px; height: 20px;
+  background: var(--paper); border-left: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
+  transform: rotate(45deg);
+}
+.bubble .who { margin: 0 0 4px; font: 600 16px var(--display); color: var(--muted); }
+.bubble p { margin: 0; }
+
+.result-list { margin: 0 0 12px; padding-left: 20px; }
+.result-list li { margin-bottom: 6px; }
+
+.foot { max-width: 1240px; margin: 0 auto; padding: 8px 24px 32px; color: var(--muted); font-size: 14px; }
+.foot p { max-width: 90ch; margin: 0; }
+
+@media (max-width: 860px) {
+  .stage { grid-template-columns: 1fr; gap: 18px; padding: 16px 16px 8px; }
+  .floor { position: static; }
+  .legend { display: none; }
+  .bar { padding: 10px 16px; }
+  .portfolio-banner { padding: 8px 16px; }
+  .brand { font-size: 22px; }
+  .score { font-size: 15px; white-space: nowrap; }
+  .brand-sign { width: 26px; height: 26px; }
+  .bar-tools { gap: 10px; }
+  .tool { padding: 5px 9px; font-size: 14px; }
+  .mission { padding: 18px 16px 20px; }
+  .mission h1, .mission h2 { font-size: 28px; }
+  .avatar { flex-basis: 76px; width: 76px; }
+  .foot { padding: 8px 16px 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
